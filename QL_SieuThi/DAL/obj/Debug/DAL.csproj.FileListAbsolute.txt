@@ -1,0 +1,6 @@
+E:\github\QL_SieuThi\DAL\bin\Debug\DAL.dll.config
+E:\github\QL_SieuThi\DAL\bin\Debug\DAL.dll
+E:\github\QL_SieuThi\DAL\bin\Debug\DAL.pdb
+E:\github\QL_SieuThi\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+E:\github\QL_SieuThi\DAL\obj\Debug\DAL.dll
+E:\github\QL_SieuThi\DAL\obj\Debug\DAL.pdb

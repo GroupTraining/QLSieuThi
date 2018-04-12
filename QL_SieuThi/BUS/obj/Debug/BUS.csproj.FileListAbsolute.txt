@@ -1,0 +1,7 @@
+E:\github\QL_SieuThi\BUS\bin\Debug\BUS.dll
+E:\github\QL_SieuThi\BUS\bin\Debug\BUS.pdb
+E:\github\QL_SieuThi\BUS\bin\Debug\DAL.dll
+E:\github\QL_SieuThi\BUS\bin\Debug\DAL.pdb
+E:\github\QL_SieuThi\BUS\obj\Debug\BUS.csprojResolveAssemblyReference.cache
+E:\github\QL_SieuThi\BUS\obj\Debug\BUS.dll
+E:\github\QL_SieuThi\BUS\obj\Debug\BUS.pdb

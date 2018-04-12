@@ -1,0 +1,14 @@
+E:\github\QL_SieuThi\QL_SieuThi\bin\Debug\QL_SieuThi.exe.config
+E:\github\QL_SieuThi\QL_SieuThi\bin\Debug\QL_SieuThi.exe
+E:\github\QL_SieuThi\QL_SieuThi\bin\Debug\QL_SieuThi.pdb
+E:\github\QL_SieuThi\QL_SieuThi\bin\Debug\BUS.dll
+E:\github\QL_SieuThi\QL_SieuThi\bin\Debug\DAL.dll
+E:\github\QL_SieuThi\QL_SieuThi\bin\Debug\BUS.pdb
+E:\github\QL_SieuThi\QL_SieuThi\bin\Debug\DAL.pdb
+E:\github\QL_SieuThi\QL_SieuThi\obj\Debug\QL_SieuThi.csprojResolveAssemblyReference.cache
+E:\github\QL_SieuThi\QL_SieuThi\obj\Debug\QL_SieuThi.GUI.Login.resources
+E:\github\QL_SieuThi\QL_SieuThi\obj\Debug\QL_SieuThi.GUI.Main.resources
+E:\github\QL_SieuThi\QL_SieuThi\obj\Debug\QL_SieuThi.Properties.Resources.resources
+E:\github\QL_SieuThi\QL_SieuThi\obj\Debug\QL_SieuThi.csproj.GenerateResource.Cache
+E:\github\QL_SieuThi\QL_SieuThi\obj\Debug\QL_SieuThi.exe
+E:\github\QL_SieuThi\QL_SieuThi\obj\Debug\QL_SieuThi.pdb
