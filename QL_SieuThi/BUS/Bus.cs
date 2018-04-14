@@ -59,7 +59,7 @@ namespace BUS
             p.TenKH = tenkh;
             p.DiaChi = diachi;
             p.SDT = sdt;
-            data.Khach_Hangs.InsertOnSubmit(p);     
+             
             data.SubmitChanges();
             return 1;
 
