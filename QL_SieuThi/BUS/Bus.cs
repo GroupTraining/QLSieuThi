@@ -48,6 +48,8 @@ namespace BUS
             a.TenKH = tenkh;
             a.DiaChi = diachi;
             a.SDT = sdt;
+            data.Khach_Hangs.InsertOnSubmit(a);
+            data.SubmitChanges();    
             return 1;
         }
 
@@ -57,6 +59,7 @@ namespace BUS
             p.TenKH = tenkh;
             p.DiaChi = diachi;
             p.SDT = sdt;
+            data.Khach_Hangs.InsertOnSubmit(p);     
             data.SubmitChanges();
             return 1;
 
@@ -64,10 +67,8 @@ namespace BUS
 
         public object DelKhachHang(string makh,string tenkh,string diachi,string  sdt)
         {
-            var kh = data.Khach_Hangs.Single(a => a.MaKH == makh);
-            var hdbh = data.HoaDon_BanHangs.Single(a => a.MaKH == makh);
+            var kh = data.Khach_Hangs.Single(a => a.MaKH == makh);          
             data.Khach_Hangs.DeleteOnSubmit(kh);
-            data.HoaDon_BanHangs.DeleteOnSubmit(hdbh);
             data.SubmitChanges();
             return 1; ;
 
