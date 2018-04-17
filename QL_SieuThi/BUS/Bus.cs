@@ -73,5 +73,54 @@ namespace BUS
             return 1; ;
 
         }
+
+        //Nhà cung cấp
+        public object getNhacungcap()
+        {
+            var kh = from p in data.NhaCungCaps
+                     select new
+                     {
+                         MaNhaCungCap = p.MaNhaCungCap,
+                         TenNhaCungCap = p.TenNhaCungCap,
+                         DiaChi = p.DiaChi,
+                         SDT = p.SDT
+
+                     };
+            return kh;
+
+        }
+
+        public object AddNhaCungCap(string manhacungcap, string tennhacungcap, string diachi, string sdt)
+        {
+            NhaCungCap a = new NhaCungCap();
+            a.MaNhaCungCap = manhacungcap;
+            a.TenNhaCungCap = tennhacungcap;
+            a.DiaChi = diachi;
+            a.SDT = sdt;
+            data.NhaCungCaps.InsertOnSubmit(a);
+            data.SubmitChanges();
+            return 1;
+        }
+
+        public object EditNhaCungCap(string manhacungcap, string tennhacungcap, string diachi, string sdt)
+        {
+            var p = data.NhaCungCaps.Single(a => a.MaNhaCungCap == manhacungcap);
+            p.TenNhaCungCap = tennhacungcap;
+            p.DiaChi = diachi;
+            p.SDT = sdt;
+
+            data.SubmitChanges();
+            return 1;
+
+        }
+        public object DelNhaCungCap(string manhacungcap)
+        {
+            var cc = data.NhaCungCaps.Single(a => a.MaNhaCungCap == manhacungcap);
+            data.NhaCungCaps.DeleteOnSubmit(cc);
+            data.SubmitChanges();
+            return 1; ;
+
+        }
+
     }
 }
