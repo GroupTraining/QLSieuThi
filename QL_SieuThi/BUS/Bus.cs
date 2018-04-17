@@ -277,5 +277,66 @@ namespace BUS
             data.SubmitChanges();
             return true;
         }
+
+        //QL hóa đơn xuất
+        public object  get_HDBH()
+        {
+            var hd = from x in data.HoaDon_BanHangs
+                     from y in data.ChiTiet_HoaDon_BanHangs
+                     where x.MaHoaDon == y.MaHoaDon
+                     select new
+                     {
+                         MaHoaDon = x.MaHoaDon,
+                         MaHang = y.MaHang,
+                         SoLuongHang = y.SoLuongHang,
+                         TongTienHang = y.TongTienHang,
+                         TongTien = x.TongTien,
+                         NgayLapHoaDon = x.NgayLapHoaDon,
+                         MaKH = x.MaKH,
+                         MaNV = x.MaNV
+                     };
+            return hd;
+        }
+        public object search_HDBH(string giatri)
+        {
+            var hd = from x in data.HoaDon_BanHangs
+                     from y in data.ChiTiet_HoaDon_BanHangs
+                     where x.MaHoaDon == y.MaHoaDon
+                     select new
+                     {
+                         MaHoaDon = x.MaHoaDon,
+                         MaHang = y.MaHang,
+                         SoLuongHang = y.SoLuongHang,
+                         TongTienHang = y.TongTienHang,
+                         TongTien = x.TongTien,
+                         NgayLapHoaDon = x.NgayLapHoaDon,
+                         MaKH = x.MaKH,
+                         MaNV = x.MaNV
+                     }into hdbh where hdbh.MaHoaDon.Contains(giatri) || hdbh.MaHang.Contains(giatri) || hdbh.SoLuongHang.ToString().Contains(giatri) 
+                      || hdbh.TongTienHang.ToString().Contains(giatri) || hdbh.TongTien.ToString().Contains(giatri) 
+                      || hdbh.NgayLapHoaDon.ToString().Contains(giatri) || hdbh.MaKH.Contains(giatri) || hdbh.MaNV.Contains(giatri)
+                     select hdbh;
+            return hd;
+        }
+        public object delete_CTHDBH(string mahdbh, string mahang)
+        {
+            var cthd = from n in data.ChiTiet_HoaDon_BanHangs where n.MaHoaDon == mahdbh where n.MaHang == mahang select n;
+            data.ChiTiet_HoaDon_BanHangs.DeleteAllOnSubmit(cthd);
+            var cthd2 = from n in data.ChiTiet_HoaDon_BanHangs
+                        where n.MaHoaDon == mahdbh
+                        select n.TongTienHang;
+            int tien = 0;
+            foreach (int item in cthd2)
+            {
+                tien = tien + item;
+            }
+            HoaDon_BanHang hd = data.HoaDon_BanHangs.Single(a => a.MaHoaDon == mahdbh);
+            
+            return cthd;
+        }
+        public object delete_HDBH(string mahdbh)
+        {
+
+        }
     }
 }
