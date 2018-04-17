@@ -121,6 +121,97 @@ namespace BUS
             return 1; ;
 
         }
+        //QL Hàng Hóa
+        public object getHangHoa()
+        {
+            var hh = from p in data.Hang_Hoas
+                     select new {
+                          MaHang = p.MaHang,
+                          TenHang = p.TenHang,
+                          NhaCungCap = p.MaNhaCungCap,
+                          Gia = p.Gia,
+                          SoLuong = p.SoLuong
+                     };
+            return hh;
+        }
+        public object AddHangHoa(string mahh, string tenhh, string nhacc, string gia, string soluong)
+        {
+            Hang_Hoa p = new Hang_Hoa();
+            p.MaHang = mahh;
+            p.TenHang = tenhh;
+            p.Gia = Convert.ToInt32(gia);
+            p.SoLuong = Convert.ToInt32(soluong);
+            string macc = "";
+            if (nhacc == "Hồng Hà")
+            {
+                macc = "CC1       ";
+            }
+            else if (nhacc == "Thiên Long")
+            {
+                macc = "CC2       ";
+            }
+            else if (nhacc == "Vinamilk")
+            {
+                macc = "CC3       ";
+            }
+            else if (nhacc == "Orion")
+            {
+                macc = "CC4       ";
+            }
+            else if (nhacc == "Hải Hà")
+            {
+                macc = "CC5       ";
+            }
+            p.MaNhaCungCap = macc;
+
+            data.Hang_Hoas.InsertOnSubmit(p);
+            data.SubmitChanges();
+            return 1;
+        }
+        public object EditHangHoa(string mahh,string tenhh, string nhacc, string gia, string soluong)
+        {
+            var p = data.Hang_Hoas.Single(a => a.MaHang == mahh);
+            p.TenHang = tenhh;
+            p.Gia = Convert.ToInt32(gia);
+            p.SoLuong = Convert.ToInt32(soluong);
+            string macc = "";
+            if(nhacc == "Hồng Hà")
+            {
+                macc = "CC1       ";
+            }else if (nhacc == "Thiên Long")
+            {
+                macc = "CC2       ";
+            }
+            else if (nhacc == "Vinamilk")
+            {
+                macc = "CC3       ";
+            }
+            else if (nhacc == "Orion")
+            {
+                macc = "CC4       ";
+            }
+            else if (nhacc == "Hải Hà")
+            {
+                macc = "CC5       ";
+            }
+            p.MaNhaCungCap = macc;
+            data.SubmitChanges();
+            return 1;
+
+        }
+        public object DelHangHoa(string mahh)
+        {
+            var p = data.Hang_Hoas.Single(a => a.MaHang == mahh);
+            var hdhh = data.ChiTiet_HoaDon_NhapHangs.Single(a => a.MaHang == mahh);
+            var hd = data.ChiTiet_HoaDon_BanHangs.Single(a => a.MaHang == mahh);
+
+            data.ChiTiet_HoaDon_NhapHangs.DeleteOnSubmit(hdhh);
+            data.ChiTiet_HoaDon_BanHangs.DeleteOnSubmit(hd);
+            data.Hang_Hoas.DeleteOnSubmit(p);
+            data.SubmitChanges();
+            return 1; ;
+
+        }
         // QL Hóa Đơn
         public object getall_hd()
         {
