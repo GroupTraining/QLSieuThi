@@ -121,6 +121,70 @@ namespace BUS
             return 1; ;
 
         }
-
+        // QL Hóa Đơn
+        public object getall_hd()
+        {
+            var hd = from p in data.HoaDon_Nhaps
+                     select new
+                     {
+                         MaHD = p.MaHoaDonNhap,
+                         NgayNhap = p.NgayNhapHang,
+                         DonViTinh = p.DonViTinh,
+                         TongTien = p.TongTien,
+                         MaNV = p.MaNV
+                     };
+            return hd;
+        }
+        public bool QLHDNhap(string mahd, string mancc, string mahh, int sl)
+        {
+            HoaDon_Nhap hd = data.HoaDon_Nhaps.Single(p => p.MaHoaDonNhap == mahd);
+            var cts = from ct in data.ChiTiet_HoaDon_NhapHangs
+                      where ct.MaHoaDonNhap == mahd
+                      select ct;
+            Hang_Hoa hh = data.Hang_Hoas.Single(p => p.MaHang == mahh);
+            DateTime time = DateTime.Now;
+            if (hd != null)
+            {
+                foreach (ChiTiet_HoaDon_NhapHang ct in cts)
+                {
+                    if (ct.MaHang == mahh)
+                    {
+                        ct.SoLuongHang += sl;
+                        ct.TongTien += hh.Gia * sl;
+                        hd.NgayNhapHang = time;
+                        hd.TongTien += hh.Gia * sl;
+                    }
+                    else
+                    {
+                        ChiTiet_HoaDon_NhapHang new_ct = new ChiTiet_HoaDon_NhapHang();
+                        new_ct.MaHoaDonNhap = mahd;
+                        new_ct.MaHang = mahh;
+                        new_ct.MaNhaCungCap = mancc;
+                        new_ct.SoLuongHang = sl;
+                        new_ct.TongTien = hh.Gia * sl;
+                        data.ChiTiet_HoaDon_NhapHangs.InsertOnSubmit(new_ct);
+                    }
+                }
+            }
+            else
+            {
+                HoaDon_Nhap hdn = new HoaDon_Nhap();
+                hdn.MaHoaDonNhap = mahd;
+                hdn.NgayNhapHang = time;
+                hdn.DonViTinh = "vnd";
+                hdn.TongTien = hh.Gia * sl;
+                hdn.MaNV = "NV1";
+                data.HoaDon_Nhaps.InsertOnSubmit(hdn);
+                ChiTiet_HoaDon_NhapHang new_ct = new ChiTiet_HoaDon_NhapHang();
+                new_ct.MaHoaDonNhap = mahd;
+                new_ct.MaHang = mahh;
+                new_ct.MaNhaCungCap = mancc;
+                new_ct.SoLuongHang = sl;
+                new_ct.TongTien = hh.Gia * sl;
+                data.ChiTiet_HoaDon_NhapHangs.InsertOnSubmit(new_ct);
+            }
+            data.SubmitChanges();
+            return true;
+        }
     }
 }
