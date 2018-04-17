@@ -17,9 +17,10 @@ namespace QL_SieuThi.GUI
             InitializeComponent();
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void quảnLýHóaĐơnBánHàngToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmQLHoaDonBanHang hdbh = new frmQLHoaDonBanHang();
+            hdbh.Show();
         }
     }
 }
