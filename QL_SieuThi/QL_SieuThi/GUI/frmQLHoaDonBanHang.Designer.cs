@@ -113,6 +113,7 @@
             this.button1.TabIndex = 12;
             this.button1.Text = "Thêm";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button4
             // 
@@ -122,6 +123,7 @@
             this.button4.TabIndex = 11;
             this.button4.Text = "Xóa";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
@@ -131,6 +133,7 @@
             this.button5.TabIndex = 10;
             this.button5.Text = "Sửa";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -140,6 +143,7 @@
             this.button6.TabIndex = 9;
             this.button6.Text = "Thêm";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // groupBox2
             // 
@@ -230,6 +234,7 @@
             // 
             // txtMahd
             // 
+            this.txtMahd.Enabled = false;
             this.txtMahd.Location = new System.Drawing.Point(131, 21);
             this.txtMahd.Name = "txtMahd";
             this.txtMahd.Size = new System.Drawing.Size(100, 20);
@@ -262,6 +267,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "Sửa";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // groupBox1
             // 
@@ -282,6 +288,7 @@
             // 
             // cbMahang
             // 
+            this.cbMahang.Enabled = false;
             this.cbMahang.FormattingEnabled = true;
             this.cbMahang.Location = new System.Drawing.Point(132, 81);
             this.cbMahang.Name = "cbMahang";
@@ -294,6 +301,7 @@
             this.txtSl.Name = "txtSl";
             this.txtSl.Size = new System.Drawing.Size(100, 20);
             this.txtSl.TabIndex = 14;
+            this.txtSl.TextChanged += new System.EventHandler(this.txtSl_TextChanged);
             // 
             // txtThanhtien
             // 

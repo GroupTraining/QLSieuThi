@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using System.Globalization;
+using System.Windows.Forms;
+
 namespace BUS
 {
     public class Bus
@@ -322,6 +324,7 @@ namespace BUS
         {
             var cthd = from n in data.ChiTiet_HoaDon_BanHangs where n.MaHoaDon == mahdbh where n.MaHang == mahang select n;
             data.ChiTiet_HoaDon_BanHangs.DeleteAllOnSubmit(cthd);
+            data.SubmitChanges();
             var cthd2 = from n in data.ChiTiet_HoaDon_BanHangs
                         where n.MaHoaDon == mahdbh
                         select n.TongTienHang;
@@ -331,12 +334,95 @@ namespace BUS
                 tien = tien + item;
             }
             HoaDon_BanHang hd = data.HoaDon_BanHangs.Single(a => a.MaHoaDon == mahdbh);
-            
+            hd.TongTien = tien;
+            data.SubmitChanges();
             return cthd;
         }
         public object delete_HDBH(string mahdbh)
         {
-
+            HoaDon_BanHang hd = data.HoaDon_BanHangs.Single(a => a.MaHoaDon == mahdbh);
+            var cthd = from n in data.ChiTiet_HoaDon_BanHangs
+                       where n.MaHoaDon == mahdbh
+                       select n;
+            data.ChiTiet_HoaDon_BanHangs.DeleteAllOnSubmit(cthd);
+            data.SubmitChanges();
+            data.HoaDon_BanHangs.DeleteOnSubmit(hd);
+            data.SubmitChanges();
+            return hd;
+        }
+        public object edit_CTHDBD(string mahdbh, string mahang, string sl, string tien)
+        {
+            var cthd = from n in data.ChiTiet_HoaDon_BanHangs where n.MaHoaDon == mahdbh where n.MaHang == mahang select n;
+            foreach (var item in cthd)
+            {
+                item.SoLuongHang = Convert.ToInt32(sl);
+                item.TongTienHang = Convert.ToInt32(tien);
+            }
+            data.SubmitChanges();
+            var cthd2 = from n in data.ChiTiet_HoaDon_BanHangs
+                        where n.MaHoaDon == mahdbh
+                        select n.TongTienHang;
+            int tien1 = 0;
+            foreach (int item in cthd2)
+            {
+                tien1 = tien1 + item;
+            }
+            HoaDon_BanHang hd = data.HoaDon_BanHangs.Single(a => a.MaHoaDon == mahdbh);
+            hd.TongTien = tien1;
+            data.SubmitChanges();
+            return cthd;
+        }
+        public object edit_HDBD(string mahdbh, string makh, string ngay, string manv)
+        {
+            HoaDon_BanHang hd = data.HoaDon_BanHangs.Single(a => a.MaHoaDon == mahdbh);
+            hd.MaKH = makh;
+            hd.NgayLapHoaDon = Convert.ToDateTime(ngay);
+            hd.MaNV = manv;
+            data.SubmitChanges();
+            return hd;
+        }
+        public int add_CTHDBD(string mahdbh, string mahang, string sl, string tien)
+        {
+            ChiTiet_HoaDon_BanHang cthd = new ChiTiet_HoaDon_BanHang();
+            cthd.MaHoaDon = mahdbh;
+            cthd.MaHang = mahang;
+            cthd.SoLuongHang = Convert.ToInt32(sl);
+            cthd.TongTienHang = Convert.ToInt32(tien);
+            data.ChiTiet_HoaDon_BanHangs.InsertOnSubmit(cthd);
+            data.SubmitChanges();
+            var cthd2 = from n in data.ChiTiet_HoaDon_BanHangs
+                        where n.MaHoaDon == mahdbh
+                        select n.TongTienHang;
+            int tien1 = 0;
+            foreach (int item in cthd2)
+            {
+                tien1 = tien1 + item;
+            }
+            HoaDon_BanHang hd = data.HoaDon_BanHangs.Single(a => a.MaHoaDon == mahdbh);
+            hd.TongTien = tien1;
+            data.SubmitChanges();
+            return 1;
+        }
+        public int add_HDBD(string mahdbh, string makh, string ngay, string manv)
+        {
+            HoaDon_BanHang hd = new HoaDon_BanHang();
+            int sohd = (from n in data.HoaDon_BanHangs where n.MaHoaDon == mahdbh select n).Count();
+            if(sohd > 0)
+            {
+                MessageBox.Show("Đã tồn tại hóa đơn, kiểm tra mã!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                return 0;
+            }
+            else
+            {
+                hd.MaHoaDon = mahdbh;
+                hd.MaKH = makh;
+                hd.NgayLapHoaDon = Convert.ToDateTime(ngay);
+                hd.TongTien = 0;
+                hd.MaNV = manv;
+                data.HoaDon_BanHangs.InsertOnSubmit(hd);
+                data.SubmitChanges();
+                return 1;
+            }
         }
     }
 }

@@ -30,18 +30,17 @@ namespace QL_SieuThi.GUI
             {
                 cbNhanvien.Items.Add(item);
             }
-            var x2 = from n in dl.Hang_Hoas select n.MaHang;
-            foreach (string item in x2)
-            {
-                cbMahang.Items.Add(item);
-            }
 
             dataGridView1.DataSource = db.get_HDBH();    
          }
 
         private void button3_Click(object sender, EventArgs e)
         {
-
+            if (MessageBox.Show("Bạn có muốn xóa hóa đơn?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                db.delete_CTHDBH(txtMahd.Text, cbMahang.Text);
+            }
+            dataGridView1.DataSource = db.get_HDBH();
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -124,7 +123,81 @@ namespace QL_SieuThi.GUI
 
         private void btnTimkiem_Click(object sender, EventArgs e)
         {
-            db.search_HDBH(txtGiatri.Text);
+            dataGridView1.DataSource = db.search_HDBH(txtGiatri.Text);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if(MessageBox.Show("Bạn có muốn xóa hóa đơn?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                db.delete_HDBH(txtMahd.Text);
+            }
+            dataGridView1.DataSource = db.get_HDBH();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Bạn có muốn sửa hóa đơn?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                db.edit_HDBD(txtMahd.Text, cbTenkh.Text, dtpN.Text, cbNhanvien.Text);
+            }
+            dataGridView1.DataSource = db.get_HDBH();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Bạn có muốn sửa hóa đơn?", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                db.edit_CTHDBD(txtMahd.Text, cbMahang.Text, txtSl.Text, txtThanhtien.Text);
+            }
+            dataGridView1.DataSource = db.get_HDBH();
+        }
+
+        private void txtSl_TextChanged(object sender, EventArgs e)
+        {
+            var hh = from n in dl.Hang_Hoas where n.MaHang == cbMahang.Text select n.Gia;
+            foreach (int item in hh)
+            {
+                txtThanhtien.Text = Convert.ToString(item * Convert.ToInt32(txtSl.Text));
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            frmThemCTHDBH themdv = null;
+            Check_Them:
+            if (themdv == null || themdv.IsDisposed)
+            {
+                themdv = new frmThemCTHDBH();
+            }
+            if (themdv.ShowDialog() == DialogResult.OK)
+            {
+                if (frmThemCTHDBH.x == 0)
+                {
+                    goto Check_Them;
+                }
+            }
+
+            dataGridView1.DataSource = db.get_HDBH();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            frmThemHDBH themdv = null;
+            Check_Them:
+            if (themdv == null || themdv.IsDisposed)
+            {
+                themdv = new frmThemHDBH();
+            }
+            if (themdv.ShowDialog() == DialogResult.OK)
+            {
+                if (frmThemHDBH.x == 0)
+                {
+                    goto Check_Them;
+                }
+            }
+
+            dataGridView1.DataSource = db.get_HDBH();
         }
     }
 }
