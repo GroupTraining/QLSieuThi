@@ -29,6 +29,35 @@ namespace QL_SieuThi.GUI
         private void btnThem_Click(object sender, EventArgs e)
         {
 
+            
+        }
+
+        private void dgvKhachHang_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+           
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void dgvKhachHang_CellClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            txtMaKH.Enabled = false;
+            txtMaKH.Text = dgvKhachHang.CurrentRow.Cells["MaKH"].Value.ToString();
+            txtTenKH.Text = dgvKhachHang.CurrentRow.Cells["TenKH"].Value.ToString();
+            txtDiaChi.Text = dgvKhachHang.CurrentRow.Cells["DiaChi"].Value.ToString();
+            txtSDT.Text = dgvKhachHang.CurrentRow.Cells["SDT"].Value.ToString();
+        }
+
+        private void btnThem_Click_1(object sender, EventArgs e)
+        {
             try
             {
                 bus.AddKhachHang(txtMaKH.Text, txtTenKH.Text, txtDiaChi.Text, txtSDT.Text);
@@ -44,16 +73,7 @@ namespace QL_SieuThi.GUI
             }
         }
 
-        private void dgvKhachHang_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            txtMaKH.Enabled = false;
-            txtMaKH.Text = dgvKhachHang.CurrentRow.Cells["MaKH"].Value.ToString();
-            txtTenKH.Text = dgvKhachHang.CurrentRow.Cells["TenKH"].Value.ToString();
-    txtDiaChi.Text = dgvKhachHang.CurrentRow.Cells["DiaChi"].Value.ToString();
-    txtSDT.Text = dgvKhachHang.CurrentRow.Cells["SDT"].Value.ToString();
-        }
-
-        private void btnSua_Click(object sender, EventArgs e)
+        private void btnSua_Click_1(object sender, EventArgs e)
         {
             if (MessageBox.Show("Bạn có muôn sửa không?", "Thông Báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) ;
             {
@@ -65,11 +85,11 @@ namespace QL_SieuThi.GUI
                 txtSDT.Text = "";
                 dgvKhachHang.Refresh();
                 dgvKhachHang.DataSource = bus.get_KhachHang();
-        
+
             }
         }
 
-        private void btnXoa_Click(object sender, EventArgs e)
+        private void btnXoa_Click_1(object sender, EventArgs e)
         {
             if (MessageBox.Show("Bạn có muôn xóa không?", "Thông Báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) ;
             {
@@ -77,7 +97,7 @@ namespace QL_SieuThi.GUI
                 MessageBox.Show("Xóa thành công");
                 dgvKhachHang.Refresh();
                 dgvKhachHang.DataSource = bus.get_KhachHang();
-           
+
             }
         }
     }
