@@ -12,6 +12,9 @@ namespace BUS
     public class Bus
     {
         DataDiagramDataContext data = new DataDiagramDataContext();
+
+        public object MessageBox { get; private set; } 
+
         public int check_login(string user, string pass)
         {
             int login = (from tks in data.TaiKhoans
@@ -27,6 +30,58 @@ namespace BUS
             }
         }
 
+        // chinhr sửa nhân viên
+        public object get_NhanVien()
+        {
+            var nv = from p in data.NhanViens
+                     select new
+                     {
+                         MaNV = p.MaNV,
+                         TenNV = p.TenNV,
+                         ChucVu = p.ChucVu,
+                         Luong = p.Luong,
+                         SDT = p.SDT,
+                         DiaChi = p.DiaChi
+                     };
+            return nv;
+        }
+        public object add_NhanVien(string mnv, string tnv, string cv, string l, string sodt, string dc)
+        {
+            NhanVien nv = new NhanVien();
+            nv.MaNV = mnv;
+            nv.TenNV = tnv;
+            nv.ChucVu = cv;
+            nv.Luong = Convert.ToInt32(l);
+            nv.SDT = sodt;
+            nv.DiaChi = dc;
+            data.NhanViens.InsertOnSubmit(nv);
+            data.SubmitChanges();
+            return 1;
+        }
+       public object edit_NhanVien(string mnv, string tnv, string cv, string l, string sodt, string dc)
+        {
+            NhanVien nv = data.NhanViens.Single(a => a.MaNV == mnv);
+            nv.TenNV = tnv;
+            nv.ChucVu = cv;
+            nv.Luong = Convert.ToInt32(l);
+            nv.SDT = sodt;
+            nv.DiaChi = dc;
+            data.SubmitChanges();
+            return nv;
+        }
+
+        public object delete_NhanVien(string mnv)
+        {
+            NhanVien nv = data.NhanViens.Single(a => a.MaNV == mnv);
+            var nvv = from n in data.HoaDon_BanHangs where n.MaNV==mnv select n;
+            data.HoaDon_BanHangs.DeleteAllOnSubmit(nvv);
+            data.SubmitChanges();
+            var nvvv = (from n in data.HoaDon_Nhaps where n.MaNV == mnv select n);
+            data.HoaDon_Nhaps.DeleteAllOnSubmit(nvvv);
+            data.NhanViens.DeleteOnSubmit(nv);
+            data.SubmitChanges();
+            return nv;
+        }
         //chỉnh sửa khách hàng 
          public object get_KhachHang()
         {
@@ -409,8 +464,9 @@ namespace BUS
             int sohd = (from n in data.HoaDon_BanHangs where n.MaHoaDon == mahdbh select n).Count();
             if(sohd > 0)
             {
-                MessageBox.Show("Đã tồn tại hóa đơn, kiểm tra mã!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("Đã tồn tại hóa đơn, kiểm tra mã!", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                 return 0;
+               
             }
             else
             {
